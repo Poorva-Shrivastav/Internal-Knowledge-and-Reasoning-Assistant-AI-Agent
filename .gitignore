@@ -1,0 +1,8 @@
+.env
+./requirements.txt
+/.venv
+*.pdf
+
+.DS_Store
+.__pychache__
+*.pyc

@@ -1,0 +1,11 @@
+langchain
+langchain-community
+langchain_text_splitters
+langchain-openai
+python-dotenv
+pypdf
+atlassian-python-api
+lxml
+chromadb
+langchain-ollama
+lanchainhub
