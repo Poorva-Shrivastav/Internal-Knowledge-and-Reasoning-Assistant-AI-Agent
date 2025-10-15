@@ -3,9 +3,11 @@ langchain-community
 langchain_text_splitters
 langchain-openai
 python-dotenv
+dotenv
 pypdf
 atlassian-python-api
 lxml
 chromadb
-langchain-ollama
-lanchainhub
+langgraph
+langchain-core
+langchain-google-genai

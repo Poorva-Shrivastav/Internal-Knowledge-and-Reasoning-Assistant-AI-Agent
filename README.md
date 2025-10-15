@@ -33,7 +33,12 @@ Steps:
 
 2.Retrieval Chain (RAG) : Retrieve relevant context when a user asks a question
 
-3.Reasoning Agent Layer (ReAct Style)
+last commit :
+
+- Implemented `search_confluence_docs` tool to query internal Confluence pages
+- Integrates with LangGraph ToolNode for automatic tool invocation
+- Formats retrieved documents as readable strings for LLM summarization
+- Supports multi-step reasoning: LLM decides to call tool and generates final answer
 
 Note - when working with Ollama:
 

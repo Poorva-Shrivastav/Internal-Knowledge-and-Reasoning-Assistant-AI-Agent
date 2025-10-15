@@ -25,7 +25,7 @@ client = Client(api_key=langsmith_api_key)
 
 llm = OllamaLLM(model="llama3:8b", temperature=0)
 # # embedding_fn = OpenAIEmbeddings()
-embedding_fn = OllamaEmbeddings(model="llama3:8b")
+embedding_fn = OllamaEmbeddings(model="nomic-embed-text")
 
 loader1 = PyPDFLoader("InfoTech_HR_Policy_Manual.pdf")
 pdf_docs = loader1.load()
@@ -150,7 +150,7 @@ def search_confluence_docs(query: str) -> str:
 
 tools = [search_hr_docs, search_confluence_docs]
 
-# prompt_template = client.pull_prompt("hwchase17/react", include_model=True)
+# ----------------older format using langchain----------------------
 
 prompt_template = client.pull_prompt("hwchase17/react").partial(
     format_instructions=(
