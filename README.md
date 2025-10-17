@@ -46,3 +46,7 @@ Note - when working with Ollama:
 2. ps aux | grep ollama
 3. pkill ollama
 4. ollama ps - returns list of active llama models
+
+for reloading fast api server
+uvicorn main:app --reload
+used swagger ui for server testing - http://127.0.0.1:8000/docs
