@@ -11,4 +11,4 @@ chromadb
 langgraph
 langchain-core
 langchain-google-genai
-fastapi
+streamlit

@@ -31,7 +31,7 @@ def search_confluence_docs(query: str) -> str:
         [f"Title: {d.metadata.get('title', 'Untitled')}\n{d.page_content}" for d in docs]
     )
 
-    print("🔍 Confluence search results:", combined[:300], "...")
+    # print("🔍 Confluence search results:", combined[:300], "...")
     return combined
 
 

@@ -3,17 +3,10 @@ from dotenv import load_dotenv
 
 from langchain_community.document_loaders import PyPDFLoader, ConfluenceLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-# from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_ollama import OllamaEmbeddings
-
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import Chroma
 from langchain_core.tools import tool
 from langchain.chat_models import init_chat_model
-from langchain_core.messages import HumanMessage, AIMessage
-
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 
 load_dotenv()
 

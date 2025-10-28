@@ -4,27 +4,24 @@ from dotenv import load_dotenv
 from rag_chain.rag_chain import llm
 from agents.agent_tools import search_hr_docs, search_confluence_docs
 from langchain_core.tools import tool
-# from langchain.chat_models import init_chat_model
 from langchain_core.messages import HumanMessage, AIMessage
 
 from typing import TypedDict, Annotated, List, Optional
-from langgraph.graph import START, END, StateGraph
+from langgraph.graph import END, StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 
-from fastapi import FastAPI, Query
-from fastapi.responses import StreamingResponse
-from fastapi.middleware.cors import CORSMiddleware
-import json
-from uuid import uuid4
-
 from langgraph.checkpoint.memory import MemorySaver
 
-# load_dotenv()
+import streamlit as st
+import asyncio
 
-# # langsmith_api_key = os.environ["LANGSMITH_API_KEY"]
 
-# # client = Client(api_key=langsmith_api_key)
+st.title("SearchIQ")
+
+st.markdown("**:rainbow[Smart internal search engine]**")
+            
+st.caption("Currently I'm fed with data on OAuth2 : [Confluence API](https://poorvashrivastav03.atlassian.net/wiki/spaces/TRD/overview) and HR policy document.")
 
 memory = MemorySaver()
 
@@ -58,30 +55,42 @@ builder.set_entry_point("reasoning_agent_node")
 builder.add_conditional_edges("reasoning_agent_node", tools_condition)
 builder.add_edge("tools", "reasoning_agent_node")
 
-graph = builder.compile()
 graph = builder.compile(checkpointer=memory)
 
-app = FastAPI()
+config = {'configurable' : {'thread_id' : 1}}
 
-# Adding cors middleware setting for frontend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins = ["*"],
-    allow_credentials=True,
-    allow_methods = ["*"],
-    allow_headers = ["*"],
-    expose_headers = ["Content-Type"]
-    )
+# if "messages" not in st.session_state:
+#     st.session_state.messages = []
+if "messages" not in st.session_state:
+    st.session_state.messages = [{"role": "assistant", "content": "I'm here to help you. Let's begin!"}]
 
-# receives user input msg from client
-@app.get("/chat/{message}")
-async def get_chat_message(message: str, checkpoint_id: Optional[str] = None):
-    config = {
-        "configurable" : {
-            "thread_id" : checkpoint_id
-        }}
-    return await graph.ainvoke({
-    "messages": [HumanMessage(content=message)]
-}, config=config)
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-# print(response["messages"][-1].content)
+prompt = st.chat_input("What's up?")
+# full_response = ""
+
+if prompt:
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    
+    # Display assistant response in chat message container
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+
+    response = graph.invoke({
+    "messages": [HumanMessage(content=prompt)]
+    }, config=config)
+    
+    if response["messages"][-1].content:
+        full_response = response["messages"][-1].content        
+
+    message_placeholder.markdown(response["messages"][-1].content)
+
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
