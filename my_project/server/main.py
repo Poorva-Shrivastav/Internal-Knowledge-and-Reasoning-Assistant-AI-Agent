@@ -1,21 +1,21 @@
 import os 
 from dotenv import load_dotenv
-
-from rag_chain.rag_chain import llm
 from agents.agent_tools import search_hr_docs, search_confluence_docs
 from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage
+from langchain.chat_models import init_chat_model
 
 from typing import TypedDict, Annotated, List, Optional
 from langgraph.graph import END, StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
-
 from langgraph.checkpoint.memory import MemorySaver
 
 import streamlit as st
-import asyncio
 
+load_dotenv()
+
+llm = init_chat_model("google_genai:gemini-2.0-flash")
 
 st.title("SearchIQ")
 

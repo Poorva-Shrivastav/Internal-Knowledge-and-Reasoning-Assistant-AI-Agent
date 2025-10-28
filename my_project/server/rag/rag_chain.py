@@ -6,15 +6,23 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.tools import tool
-from langchain.chat_models import init_chat_model
+from langchain_mistralai import MistralAIEmbeddings
+
 
 load_dotenv()
 
+# os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
+
 confluence_api_key = os.environ["CONFLUENCE_TOKEN"]
+os.environ["MISTRAL_API_KEY"] = os.getenv("MISTRAL_API_KEY")
 
-llm = init_chat_model("google_genai:gemini-2.0-flash")
+# llm = init_chat_model("google_genai:gemini-2.0-flash")
 
-embedding_fn = OllamaEmbeddings(model="nomic-embed-text")
+# embedding_fn = OllamaEmbeddings(model="nomic-embed-text")
+
+embedding_fn = MistralAIEmbeddings(
+    model="mistral-embed",
+)
 
 loader1 = PyPDFLoader("./assets/InfoTech_HR_Policy_Manual.pdf")
 

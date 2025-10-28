@@ -1,6 +1,6 @@
 
 from langchain_core.tools import tool
-from rag_chain.rag_chain import retriever_hr, retriever_confl
+from rag.rag_chain import retriever_hr, retriever_confl
 
 @tool("search_hr_docs", return_direct=False)
 def search_hr_docs(query: str) -> str:
