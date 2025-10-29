@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from langchain_community.document_loaders import PyPDFLoader, ConfluenceLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_ollama import OllamaEmbeddings
+# from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.tools import tool
 from langchain_mistralai import MistralAIEmbeddings
