@@ -7,6 +7,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_core.tools import tool
 from langchain_mistralai import MistralAIEmbeddings
+from pathlib import Path
 
 load_dotenv()
 
@@ -23,7 +24,12 @@ embedding_fn = MistralAIEmbeddings(
     model="mistral-embed",
 )
 
-loader1 = PyPDFLoader("./assets/InfoTech_HR_Policy_Manual.pdf")
+base_dir = os.path.dirname(os.path.abspath(__file__))
+pdf_path = os.path.join(base_dir, "../assets/InfoTech_HR_Policy_Manual.pdf")
+
+# pdf_path = Path(__file__).resolve().parent.parent /"assets"/ "InfoTech_HR_Policy_Manual.pdf"
+
+loader1 = PyPDFLoader(pdf_path)
 
 pdf_docs = loader1.load()
 
